@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request
+from views import views
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return render_template("balance_sheet.html", people=['Lloyd', 'Evan', 'Tim', 'Gage', 'Aiden'])
+app.register_blueprint(views, url_prefix='/')
 
-if __name__ =='__main__':
+if __name__ == '__main__':
     app.run(debug=True)
