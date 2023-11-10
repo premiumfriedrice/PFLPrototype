@@ -7,9 +7,136 @@
 }
 
 .hero {
-    outline: red dashed 1px;
+    /*outline: red dashed 1px;*/
+    height: 100vh;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.forms {
+    height: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.income {
+    /*outline: green dashed 1px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.expense {
+    /*outline: green dashed 1px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-input {
+    /*outline: blue dashed 1px;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 18%;
+    padding: .5rem;
+    margin-bottom: .8rem;
+    border-radius: .5rem;
+    background-color: #d3d3d3;
+}
+
+.form-wrapper {
+    /*outline: yellow dashed 1px;*/
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=text] {
+    height: 100%;
+    width: 50%;
+    border-radius: .3rem;
+    border: none;
+    color: black;
+    font-size: medium;
+    padding: .5rem;
+    margin-right: .5rem;
+}
+
+input[type=number] {
+    height: 100%;
+    width: 50%;
+    border-radius: .3rem;
+    border: none;
+    color: #585757;
+    font-size: medium;
+    padding: .5rem;
+    margin-right: .5rem;
+}
+
+.form-wrapper select {
+    color: #585757;
+    padding: .5rem;
+    margin-right: .5rem;
+    height: 100%;
+    width: 50%;
+    border-radius: .3rem;
+    border: none;
+    font-size: medium;
+    outline: none;
+}
+
+.delete-button {
+    display: flex;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 2rem;
+    background-color: transparent;
+    border: none;
+    font-size: medium;
+}
+
+.delete-button:hover {
+    display: flex;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: .3rem;
+    border: none;
+    font-weight: bolder;
+}
+
+.add-button {
+    display: flex;
+    color: #d3d3d3;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 2rem;
+    background-color: transparent;
+    border: none;
+    font-size: 2.1rem;
+}
+
+.add-button:hover {
+    display: flex;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: .3rem;
+    border: none;
+    font-weight: bolder;
 }
