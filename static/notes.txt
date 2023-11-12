@@ -1,0 +1,4 @@
+const buttonList = form.querySelectorAll('.add-button');
+const formList = form.querySelectorAll('.form-input');      
+
+add to bs.js later when there is more than two forms
