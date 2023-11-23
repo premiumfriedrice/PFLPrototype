@@ -157,7 +157,9 @@ input[type=number] {
     display: inline-block;
     padding: 10px 20px;
     border-radius: 50px;
-    background-color: #db3f34; /* Change the background color as needed */
+    border-width: 5px;
+    border-color: #585757;
+    background-color: #b9b9b9; /* Change the background color as needed */
     color: #000000; /* Change the text color as needed */
     text-align: center;
     text-decoration: none;
