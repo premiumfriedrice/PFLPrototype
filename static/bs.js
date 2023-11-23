@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addButton.addEventListener('click', function() {
         const formInput = form.querySelector('.form-input').cloneNode(true);
-        formInput.querySelector('input[name="name"]').value = '';
-        formInput.querySelector('input[name="amount"]').value = '';
-        formInput.querySelector('select[name="frequency"]').selectedIndex = 0;
+        formInput.querySelector('input[name="expense-name"]').value = '';
+        formInput.querySelector('input[name="expense-amount"]').value = '';
+        formInput.querySelector('select[name="expense-frequency"]').selectedIndex = 0;
 
         const deleteButton = formInput.querySelector('.delete-button');
         deleteButton.addEventListener('click', function() {
@@ -24,9 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addButton.addEventListener('click', function() {
         const formInput = form.querySelector('.form-input').cloneNode(true);
-        formInput.querySelector('input[name="name"]').value = '';
-        formInput.querySelector('input[name="amount"]').value = '';
-        formInput.querySelector('select[name="frequency"]').selectedIndex = 0;
+        formInput.querySelector('input[name="income-name"]').value = '';
+        formInput.querySelector('input[name="income-amount"]').value = '';
+        formInput.querySelector('select[name="income-frequency"]').selectedIndex = 0;
 
         const deleteButton = formInput.querySelector('.delete-button');
         deleteButton.addEventListener('click', function() {

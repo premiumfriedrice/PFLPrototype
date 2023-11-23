@@ -2,3 +2,10 @@ const buttonList = form.querySelectorAll('.add-button');
 const formList = form.querySelectorAll('.form-input');      
 
 add to bs.js later when there is more than two forms
+
+
+1 - easiest, finish in a day
+2 - harder than 1
+3 - would take a couple days
+5-8 - would take a whole week
+10-13 - would take 2 weeks
