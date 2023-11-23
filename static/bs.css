@@ -22,7 +22,8 @@
 }
 
 .forms {
-    height: 100%;
+    /*outline: red dashed 1px;*/
+    height: 50%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
@@ -145,3 +146,25 @@ input[type=number] {
     border: none;
     font-weight: bolder;
 }
+
+.calculate {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculate-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border-width: 5px;
+    border-color: #585757;
+    background-color: #b9b9b9; /* Change the background color as needed */
+    color: #000000; /* Change the text color as needed */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
