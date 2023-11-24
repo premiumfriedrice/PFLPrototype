@@ -15,7 +15,7 @@ def getIncomeNumbers():
         income_amount = request.form['income-amount']
         income_frequency = request.form['income-frequency']
         income_list = [income_name, income_amount, income_frequency]
-        return calculatedData(income_list)#render_template('balance_sheet.html', sentence=calculatedData(income_list))
+        return render_template('balance_sheet.html', sentence=calculatedData(income_list))
     else:
         return render_template('balance_sheet.html')
 

@@ -46,7 +46,7 @@
                 </div>
                 <div class="expense">
                     <h2 class="form-name">Expenses</h2>
-                    <form id="expense-form">
+                    <form id="expense-form" method="post">
                         <div class="form-input">
                             <div class="form-wrapper">
                                 <input type="text" name="expense-name" placeholder="Name">
@@ -69,7 +69,7 @@
                 <h1>{{sentence}}</h1>
             </div>
             <div class="calculate">
-                <button class="calculate-button" type="button">Calculate</button>
+                <button class="calculate-button" type="submit" value="submit" formmethod="post" onclick="submitForms()">Calculate</button>
             </div>
         </div>
     </div>

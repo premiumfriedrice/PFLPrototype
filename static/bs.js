@@ -36,3 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
         form.insertBefore(formInput, addButton);
     });
 });
+
+submitForms = function() {
+    document.getElementById("expense-form").submit();
+    document.getElementById("income-form").submit();
+}
