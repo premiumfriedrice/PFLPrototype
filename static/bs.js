@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {  // clones expense fields
     const form = document.getElementById('expense-form');
     const addButton = form.querySelector('.add-button');
 
@@ -18,10 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// clones income fields
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('income-form');
     const addButton = form.querySelector('.add-button');
-
     addButton.addEventListener('click', function() {
         const formInput = form.querySelector('.form-input').cloneNode(true);
         formInput.querySelector('input[name="income-name"]').value = '';
@@ -37,7 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+//submit both forms using calculate button at the bottom
 submitForms = function() {
     document.getElementById("expense-form").submit();
     document.getElementById("income-form").submit();
 }
+
+
+// get form data 
+function getData(form) {
+    var formData = new FormData(form);
+  
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+  
+    console.log(Object.fromEntries(formData));
+  }
+  
+  document.getElementById("income-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    getData(e.target);
+  });

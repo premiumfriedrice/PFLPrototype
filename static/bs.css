@@ -148,6 +148,7 @@ input[type=number] {
 }
 
 .calculate {
+    /*outline: blue dashed 1px;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -155,13 +156,29 @@ input[type=number] {
 }
 
 .calculate-button {
+    height: 5vh;
     display: inline-block;
     padding: 10px 20px;
-    border-radius: 50px;
+    border-radius: .3rem;
     border-width: 5px;
-    border-color: #585757;
-    background-color: #b9b9b9; /* Change the background color as needed */
-    color: #000000; /* Change the text color as needed */
+    border: none;
+    background-color:#21493c; /* Change the background color as needed */
+    color:#d3d3d3; /* Change the text color as needed */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .calculate-button:hover {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: .3rem;
+    border-width: 5px;
+    border: none;
+    background-color:#21493c; /* Change the background color as needed */
+    color:#d3d3d3; /* Change the text color as needed */
     text-align: center;
     text-decoration: none;
     font-size: 16px;
