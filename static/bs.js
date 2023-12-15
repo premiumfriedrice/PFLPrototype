@@ -1,47 +1,85 @@
-document.addEventListener('DOMContentLoaded', function() {  // clones expense fields
-    const form = document.getElementById('expense-form');
+document.addEventListener('DOMContentLoaded', function() {      // Only executes contents of function when all of the DOM is loaded
+    const form = document.getElementById('income-form');
     const addButton = form.querySelector('.add-button');
 
+    let fieldID = 1;    // Used to make each field row unique
+    
     addButton.addEventListener('click', function() {
-        const formInput = form.querySelector('.form-input').cloneNode(true);
-        formInput.querySelector('input[name="expense-name"]').value = '';
-        formInput.querySelector('input[name="expense-amount"]').value = '';
-        formInput.querySelector('select[name="expense-frequency"]').selectedIndex = 0;
+        const originalRow = form.querySelector(`.form-input`);
+        const nextFormRow = originalRow.cloneNode(true);    // all clones are based on the original first row
+        fieldID++; 
+        nextFormRow.id = `income-form-row${fieldID}`;   // Changes the id of the cloned row
 
-        const deleteButton = formInput.querySelector('.delete-button');
-        deleteButton.addEventListener('click', function() {
-            form.removeChild(formInput);
+        function changeAttributes(inpN, inpA, inpF, id) {   // Change IDs and names for each input element
+            
+            inpN.setAttribute('id', `income-name${id}`);
+            inpN.setAttribute('name', `income-name${id}`);
+    
+            inpA.setAttribute('id', `income-amount${id}`);
+            inpA.setAttribute('name', `income-amount${id}`);
+    
+            inpF.setAttribute('id', `income-frequency${id}`);
+            inpF.setAttribute('name', `income-frequency${id}`);
+        }
+        const inputName = nextFormRow.querySelector(`#income-name1`);   // The cloned rows originally possess the same attributes as the original row ending with a 1
+        const inputAmount = nextFormRow.querySelector(`#income-amount1`);   
+        const inputFrequency = nextFormRow.querySelector(`#income-frequency1`);
+
+        changeAttributes(inputName, inputAmount, inputFrequency, fieldID);  // Current field ID is passed in
+
+        const deleteButton = nextFormRow.querySelector('.delete-button');
+        deleteButton.addEventListener('click', function() {     // Deletes the last row
+            form.removeChild(nextFormRow);
         });
 
-        form.insertBefore(formInput, addButton);
+        form.insertBefore(nextFormRow, addButton);
     });
 });
 
 
-// clones income fields
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('income-form');
+document.addEventListener('DOMContentLoaded', function() {      // Only executes contents of function when all of the DOM is loaded
+    const form = document.getElementById('expense-form');
     const addButton = form.querySelector('.add-button');
-    addButton.addEventListener('click', function() {
-        const formInput = form.querySelector('.form-input').cloneNode(true);
-        formInput.querySelector('input[name="income-name"]').value = '';
-        formInput.querySelector('input[name="income-amount"]').value = '';
-        formInput.querySelector('select[name="income-frequency"]').selectedIndex = 0;
 
-        const deleteButton = formInput.querySelector('.delete-button');
-        deleteButton.addEventListener('click', function() {
-            form.removeChild(formInput);
+    let fieldID = 1;    // Used to make each field row unique
+    
+    addButton.addEventListener('click', function() {
+        const originalRow = form.querySelector(`.form-input`);
+        const nextFormRow = originalRow.cloneNode(true);    // all clones are based on the original first row
+        fieldID++; 
+        nextFormRow.id = `expense-form-row${fieldID}`;   // Changes the id of the cloned row
+
+        function changeAttributes(inpN, inpA, inpF, id) {   // Change IDs and names for each input element
+            
+            inpN.setAttribute('id', `expense-name${id}`);
+            inpN.setAttribute('name', `expense-name${id}`);
+    
+            inpA.setAttribute('id', `expense-amount${id}`);
+            inpA.setAttribute('name', `expense-amount${id}`);
+    
+            inpF.setAttribute('id', `expense-frequency${id}`);
+            inpF.setAttribute('name', `expense-frequency${id}`);
+        }
+        const inputName = nextFormRow.querySelector(`#expense-name1`);   // The cloned rows originally possess the same attributes as the original row ending with a 1
+        const inputAmount = nextFormRow.querySelector(`#expense-amount1`);   
+        const inputFrequency = nextFormRow.querySelector(`#expense-frequency1`);
+
+        changeAttributes(inputName, inputAmount, inputFrequency, fieldID);  // Current field ID is passed in
+
+        const deleteButton = nextFormRow.querySelector('.delete-button');
+        deleteButton.addEventListener('click', function() {     // Deletes the last row
+            form.removeChild(nextFormRow);
         });
 
-        form.insertBefore(formInput, addButton);
+        form.insertBefore(nextFormRow, addButton);
     });
 });
 
 
 //submit both forms using calculate button at the bottom
 submitForms = function() {
-    document.getElementById("expense-form").submit();
     document.getElementById("income-form").submit();
+    document.getElementById("expense-form").submit();
 }
 
 
@@ -56,7 +94,12 @@ function getData(form) {
     console.log(Object.fromEntries(formData));
   }
   
-  document.getElementById("income-form").addEventListener("submit", function (e) {
+document.getElementById("income-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    getData(e.target);
+  });
+
+  document.getElementById("expense-form").addEventListener("submit", function (e) {
     e.preventDefault();
     getData(e.target);
   });

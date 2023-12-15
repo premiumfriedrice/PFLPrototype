@@ -26,11 +26,11 @@
                 <div class="income">
                     <h2 class="form-name">Income</h2>
                     <form id="income-form" method="post">
-                        <div class="form-input">
+                        <div class="form-input" id="income-form-row1">
                             <div class="form-wrapper">
-                                <input type="text" name="income-name" placeholder="Name">
-                                <input type="number" name="income-amount" placeholder="Amount">
-                                <select name="income-frequency">
+                                <input type="text" id="income-name1" name="income-name1" placeholder="Name">
+                                <input type="number" id="income-amount1" name="income-amount1" placeholder="Amount">
+                                <select id="income-frequency1" name="income-frequency1">
                                     <option value="none" selected disabled hidden>Frequency</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
@@ -46,18 +46,18 @@
                 <div class="expense">
                     <h2 class="form-name">Expenses</h2>
                     <form id="expense-form" method="post">
-                        <div class="form-input">
+                        <div class="form-input" id="expense-form-row1">
                             <div class="form-wrapper">
-                                <input type="text" name="expense-name" placeholder="Name">
-                                <input type="number" name="expense-amount" placeholder="Amount">
-                                <select name="expense-frequency">
+                                <input type="text" id="expense-name1" name="expense-name1" placeholder="Name">
+                                <input type="number" id="expense-amount1" name="expense-amount1" placeholder="Amount">
+                                <select id="expense-frequency1" name="expense-frequency1">
                                     <option value="none" selected disabled hidden>Frequency</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="bi-weekly">Bi-Weekly</option>
                                     <option value="monthly">Monthly</option>
                                 </select>
-                                <button class="delete-button" type="button"><i class="fa-solid fa-x"></i></button>
+                                <button class="delete-button" type="button" id="add-button"><i class="fa-solid fa-x"></i></button>
                             </div>
                         </div>
                         <button class="add-button" type="button"><i class="fa-solid fa-square-plus"></i></button>
