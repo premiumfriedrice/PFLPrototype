@@ -12,12 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 
         function changeAttributes(inpN, inpA, inpF, id) {   // Change IDs and names for each input element
             
+            inpN.value = '';    // Sets the initial value of clone to default
             inpN.setAttribute('id', `income-name${id}`);
             inpN.setAttribute('name', `income-name${id}`);
     
+            inpA.value = '';
             inpA.setAttribute('id', `income-amount${id}`);
             inpA.setAttribute('name', `income-amount${id}`);
-    
+            
+            inpF.selectedIndex = 0;
             inpF.setAttribute('id', `income-frequency${id}`);
             inpF.setAttribute('name', `income-frequency${id}`);
         }
