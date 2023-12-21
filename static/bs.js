@@ -79,13 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 });
 
 
-//submit both forms using calculate button at the bottom
-submitForms = function() {
-    document.getElementById("income-form").submit();
-    document.getElementById("expense-form").submit();
-}
-
-
 // get form data 
 function getData(form) {
     var formData = new FormData(form);
@@ -93,16 +86,55 @@ function getData(form) {
     for (var pair of formData.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     }
-  
+
     console.log(Object.fromEntries(formData));
   }
-  
-document.getElementById("income-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    getData(e.target);
-  });
 
-  document.getElementById("expense-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    getData(e.target);
-  });
+//submit both forms using calculate button at the bottom
+function submitForms(form) {
+    form.submit(function(e) {
+        e.preventDefault(); // supposed to prevent reload
+        getData(form);
+    });
+
+    //document.getElementById("expense-form").submit();
+}
+
+function exec() {
+    var form = document.querySelector("#income-form");
+    form.addEventListener('submit', submitForms(form));
+}
+
+
+//function exec() {
+//    var form = document.querySelector("#income-form");
+//
+//    form.addEventListener('submit', function(e) {
+//        e.preventDefault(); // Prevent default form submission behavior if needed
+//
+//        // Optionally, perform client-side validation or other operations here
+//
+//        // Directly submit the form
+//        fetch('/balance_sheet', {
+//            method: 'POST',
+//            body: new FormData(form)
+//        }).then(response => {
+//            if (response.ok) {
+//                return response.json(); // Assuming server responds with JSON data
+//            } else {
+//                throw new Error('Network response was not ok.');
+//            }
+//        }).then(data => {
+//            // Handle successful response data
+//            console.log('Server response:', data);
+//            // Update UI or perform actions with the received data
+//        }).catch(error => {
+//            // Handle fetch errors or server-side errors
+//            console.error('There was a problem with the fetch operation:', error);
+//            // Display an error message or handle the error condition
+//        });
+//    });
+//
+//    // Trigger form submission programmatically
+//    form.dispatchEvent(new Event('submit'));
+//}
