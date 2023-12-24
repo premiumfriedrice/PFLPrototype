@@ -45,3 +45,40 @@ function exec() {
     // Trigger form submission programmatically
     form.dispatchEvent(new Event('submit'));
 }
+
+
+#################################### POSSIBLE SOLUTION TO AUTOMATIC CALCULATION #################################
+function rowIsFilled(row) {
+    const inputs = row.querySelectorAll('input, select');
+    let isRowFilled = true;
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            allFilled = false;
+        }
+    });
+    return isRowFilled;
+}
+
+
+function allFilled(rows) {
+    let allRowsFilled = true;
+    rows.forEach(row => {
+        if (rowIsFilled(row) === false) {
+            allRowsFilled = false;
+        }
+    })
+    return allRowsFilled
+}
+
+
+function calculate() {
+    const incomeForm = document.querySelector('#income-form');
+    const incomeFormRows = document.querySelectorAll('#income-form .form-input');
+    incomeForm.addEventListener('change', function(event) {
+        event.preventDefault()
+        while (allFilled(incomeFormRows) === false) {
+            console.log('No calculation');
+        }
+        console.log('Calculation triggered for a filled row:');
+    })
+}

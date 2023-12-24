@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {      // Only executes contents of function when all of the DOM is loaded
-    const form = document.getElementById('income-form');
+    const form = document.querySelector('#income-form');
     const addButton = form.querySelector('.add-button');
 
     let fieldID = 1;    // Used to make each field row unique
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 
 
 document.addEventListener('DOMContentLoaded', function() {      // Only executes contents of function when all of the DOM is loaded
-    const form = document.getElementById('expense-form');
+    const form = document.querySelector('#expense-form');
     const addButton = form.querySelector('.add-button');
 
     let fieldID = 1;    // Used to make each field row unique
@@ -79,62 +79,64 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 });
 
 
-// get form data 
-function getData(form) {
-    var formData = new FormData(form);
-  
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
+function getData() {        // gets the form data without submitting
+    let formData = new formData();
+}
 
-    console.log(Object.fromEntries(formData));
-  }
 
-//submit both forms using calculate button at the bottom
-function submitForms(form) {
-    form.submit(function(e) {
-        e.preventDefault(); // supposed to prevent reload
-        getData(form);
+function rowIsFilled(row) {     // checks if all the fields in a row are filled out
+    const inputs = row.querySelectorAll('input');
+    const selects = row.querySelectorAll('select');
+    let isRowFilled = true;
+
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            isRowFilled = false;
+        }
     });
 
-    //document.getElementById("expense-form").submit();
+    selects.forEach(select => {
+        if (select.selectedIndex === 0) {
+            isRowFilled = false;
+        }
+    })
+
+    console.log(isRowFilled);
+    return isRowFilled;
 }
 
-function exec() {
-    var form = document.querySelector("#income-form");
-    form.addEventListener('submit', submitForms(form));
+
+function allFilled(rows) {      // checks if all the rows are filled out
+    let allRowsFilled = true;
+    rows.forEach(row => {
+        console.log(row.id)
+        if (rowIsFilled(row) === false) {
+            allRowsFilled = false;
+        }
+    })
+    return allRowsFilled;
 }
 
 
-//function exec() {
-//    var form = document.querySelector("#income-form");
-//
-//    form.addEventListener('submit', function(e) {
-//        e.preventDefault(); // Prevent default form submission behavior if needed
-//
-//        // Optionally, perform client-side validation or other operations here
-//
-//        // Directly submit the form
-//        fetch('/balance_sheet', {
-//            method: 'POST',
-//            body: new FormData(form)
-//        }).then(response => {
-//            if (response.ok) {
-//                return response.json(); // Assuming server responds with JSON data
-//            } else {
-//                throw new Error('Network response was not ok.');
-//            }
-//        }).then(data => {
-//            // Handle successful response data
-//            console.log('Server response:', data);
-//            // Update UI or perform actions with the received data
-//        }).catch(error => {
-//            // Handle fetch errors or server-side errors
-//            console.error('There was a problem with the fetch operation:', error);
-//            // Display an error message or handle the error condition
-//        });
-//    });
-//
-//    // Trigger form submission programmatically
-//    form.dispatchEvent(new Event('submit'));
-//}
+function calculate() {      // triggers a calculation when all the rows are filled out 
+    const incomeForm = document.querySelector('#income-form');
+    let incomeFormRows = document.querySelectorAll('#income-form .form-input');
+    incomeForm.addEventListener('change', function(event) {
+        incomeFormRows = document.querySelectorAll('#income-form .form-input'); // Rechecks the page when a change happens in the form
+        event.preventDefault()
+        if (allFilled(incomeFormRows) === false) {
+            console.log('No calculation');
+        }
+        else {
+            let namesArray = [];
+            incomeFormRows.forEach(row => {
+                namesArray.push(row.querySelector('#income-name1').value);
+            })
+            console.log(namesArray);
+            console.log('Calculation triggered for a filled row:');
+        }
+    })
+}
+
+
+document.addEventListener('change', calculate());   // blur or change works 
