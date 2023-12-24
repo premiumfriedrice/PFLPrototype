@@ -79,11 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 });
 
 
-function getData() {        // gets the form data without submitting
-    let formData = new formData();
-}
-
-
 function rowIsFilled(row) {     // checks if all the fields in a row are filled out
     const inputs = row.querySelectorAll('input');
     const selects = row.querySelectorAll('select');
@@ -118,6 +113,27 @@ function allFilled(rows) {      // checks if all the rows are filled out
 }
 
 
+function objectToFormData(obj) {    // adds all values from hashmap into form data object
+    const formData = new FormData();
+   
+    Object.entries(obj).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+   
+    return formData;
+   }
+
+
+function getData(values) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/balance_sheet');
+    xhr.onload = function() {
+    console.log(this.response);
+    };
+    xhr.send(objectToFormData(values));     // sends form data through POST
+}
+
+
 function calculate() {      // triggers a calculation when all the rows are filled out 
     const incomeForm = document.querySelector('#income-form');
     let incomeFormRows = document.querySelectorAll('#income-form .form-input');
@@ -128,11 +144,16 @@ function calculate() {      // triggers a calculation when all the rows are fill
             console.log('No calculation');
         }
         else {
-            let namesArray = [];
+            let rowMap = {};
+            let i = 1;
             incomeFormRows.forEach(row => {
-                namesArray.push(row.querySelector('#income-name1').value);
+                rowMap[`income-name${i}`] = row.querySelector(`#income-name${i}`).value;
+                rowMap[`income-amount${i}`] = row.querySelector(`#income-amount${i}`).value;
+                rowMap[`income-frequency${i}`] = row.querySelector(`#income-frequency${i}`).value;
+                i++;
             })
-            console.log(namesArray);
+            getData(rowMap);
+            console.log(rowMap);
             console.log('Calculation triggered for a filled row:');
         }
     })
