@@ -142,9 +142,10 @@ function getData(values) {      // POSTS form data via AJAX call without reloadi
 
 function calculate() {      // triggers a calculation when all the rows are filled out 
     const incomeForm = document.querySelector('#income-form');
-    let incomeFormRows = document.querySelectorAll('#income-form .form-input');
+    const expenseForm = document.querySelector('#expense-form');
+    
     incomeForm.addEventListener('change', function(event) {
-        incomeFormRows = document.querySelectorAll('#income-form .form-input'); // Rechecks the page when a change happens in the form
+        let incomeFormRows = document.querySelectorAll('#income-form .form-input'); // Checks rows when a change happens in the form
         event.preventDefault()
         if (allFilled(incomeFormRows)) {
             let rowMap = {};    // added all the values into a hashmap

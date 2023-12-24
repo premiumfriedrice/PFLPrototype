@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, json, jsonify
 from flask_restful import reqparse
 from views import views
-from bscalc.calculate import calculatedData
+from bscalc.calculate import both
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ def balanceSheet():
 @app.route('/handle_form', methods=['POST'])
 def calculate():
     if request.method == "POST":
-        return calculatedData(request.form)
+        return both(request.form)
 
 
 
