@@ -89,14 +89,12 @@ function rowIsFilled(row) {     // checks if all the fields in a row are filled 
             isRowFilled = false;
         }
     });
-
     selects.forEach(select => {
         if (select.selectedIndex === 0) {
             isRowFilled = false;
         }
     })
 
-    console.log(isRowFilled);
     return isRowFilled;
 }
 
@@ -104,7 +102,6 @@ function rowIsFilled(row) {     // checks if all the fields in a row are filled 
 function allFilled(rows) {      // checks if all the rows are filled out
     let allRowsFilled = true;
     rows.forEach(row => {
-        console.log(row.id)
         if (rowIsFilled(row) === false) {
             allRowsFilled = false;
         }
@@ -124,13 +121,22 @@ function objectToFormData(obj) {    // adds all values from hashmap into form da
    }
 
 
-function getData(values) {
+function getData(values) {      // POSTS form data via AJAX call without reloading page
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/balance_sheet');
+    xhr.open('POST', '/handle_form');
     xhr.onload = function() {
-    console.log(this.response);
     };
-    xhr.send(objectToFormData(values));     // sends form data through POST
+    xhr.send(objectToFormData(values));     // POSTS form data 
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // This is executed when the call to /handle_form was successful.
+          // 'this.responseText' contains the response from the server.
+          // Insert HTML response into balance sheet page intp the report sheet div like this:
+          console.log(this.responseText);
+          document.querySelector("#report").innerHTML = this.responseText; // this.response OR this.responseText
+        }
+    }
 }
 
 
@@ -140,11 +146,8 @@ function calculate() {      // triggers a calculation when all the rows are fill
     incomeForm.addEventListener('change', function(event) {
         incomeFormRows = document.querySelectorAll('#income-form .form-input'); // Rechecks the page when a change happens in the form
         event.preventDefault()
-        if (allFilled(incomeFormRows) === false) {
-            console.log('No calculation');
-        }
-        else {
-            let rowMap = {};
+        if (allFilled(incomeFormRows)) {
+            let rowMap = {};    // added all the values into a hashmap
             let i = 1;
             incomeFormRows.forEach(row => {
                 rowMap[`income-name${i}`] = row.querySelector(`#income-name${i}`).value;
@@ -152,7 +155,7 @@ function calculate() {      // triggers a calculation when all the rows are fill
                 rowMap[`income-frequency${i}`] = row.querySelector(`#income-frequency${i}`).value;
                 i++;
             })
-            getData(rowMap);
+            getData(rowMap);    // receives data collected in hashmap and creates a POST request that updates report div in the balance sheet
             console.log(rowMap);
             console.log('Calculation triggered for a filled row:');
         }

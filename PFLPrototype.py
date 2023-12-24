@@ -11,11 +11,19 @@ app.config.from_pyfile('config.py')
 
 
 @app.route('/balance_sheet', methods=['POST', 'GET'])
-def getIncomeNumbers():
+def balanceSheet():
     if request.method == "POST":
-        return render_template('balance_sheet.html', sentence=calculatedData(request.form))
+        return render_template('balance_sheet.html', sentence=calculate())
     else:
         return render_template('balance_sheet.html')
+    
+
+@app.route('/handle_form', methods=['POST'])
+def calculate():
+    if request.method == "POST":
+        return calculatedData(request.form)
+
+
 
 
 if __name__ == '__main__':
