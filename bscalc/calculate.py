@@ -11,7 +11,7 @@ def MonthlyIncome(data):
         if r['Frequencies'] in frq_to_month:
             monthly += r['Amounts'] * frq_to_month[r['Frequencies']]
     
-    return f'Your monthly income is ${monthly:.2f}'
+    return f'{monthly:.2f}'
 
 
 def monthlyExpense(data):
@@ -25,7 +25,7 @@ def monthlyExpense(data):
         if r['Frequencies'] in frq_to_month:
             monthly += r['Amounts'] * frq_to_month[r['Frequencies']]
     
-    return f'Your monthly expenses are ${monthly:.2f}'
+    return f'{monthly:.2f}'
 
 
 def handleData(obj):
@@ -33,6 +33,6 @@ def handleData(obj):
     if ('Incomes' in obj) and ('Expenses' in obj):
         return MonthlyIncome(obj['Incomes']), monthlyExpense(obj['Expenses'])
     elif ('Incomes' in obj) and ('Expenses' not in obj):
-        return MonthlyIncome(obj['Incomes']), 0
+        return MonthlyIncome(obj['Incomes']), '0.00'
     elif ('Incomes' not in obj) and ('Expenses' in obj):
-        return 0, monthlyExpense(obj['Expenses'])
+        return '0.00', monthlyExpense(obj['Expenses'])
