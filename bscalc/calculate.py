@@ -16,17 +16,23 @@ def MonthlyIncome(data):
 
 def monthlyExpense(data):
     frq_to_month = {'daily': 30, 'weekly': 4, 'bi-weekly': 2, 'monthly': 1}
-    inc = expenseDF(data)
+    exp = expenseDF(data)
 
     monthly = 0
 
-    for row in range(len(inc)):
-        r = inc.iloc[row] # Defines each row of dataframe
+    for row in range(len(exp)):
+        r = exp.iloc[row] # Defines each row of dataframe
         if r['Frequencies'] in frq_to_month:
             monthly += r['Amounts'] * frq_to_month[r['Frequencies']]
     
     return f'Your monthly expenses are ${monthly:.2f}'
 
 
-def both(obj):
-    return MonthlyIncome(obj) + ' ' + monthlyExpense(obj)
+def handleData(obj):
+    print(obj)
+    if ('Incomes' in obj) and ('Expenses' in obj):
+        return MonthlyIncome(obj['Incomes']), monthlyExpense(obj['Expenses'])
+    elif ('Incomes' in obj) and ('Expenses' not in obj):
+        return MonthlyIncome(obj['Incomes']), 0
+    elif ('Incomes' not in obj) and ('Expenses' in obj):
+        return 0, monthlyExpense(obj['Expenses'])

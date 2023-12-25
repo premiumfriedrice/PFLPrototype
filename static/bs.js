@@ -54,12 +54,15 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
 
         function changeAttributes(inpN, inpA, inpF, id) {   // Change IDs and names for each input element
             
+            inpN.value = '';    // Sets the initial value of clone to default
             inpN.setAttribute('id', `expense-name${id}`);
             inpN.setAttribute('name', `expense-name${id}`);
     
+            inpA.value = '';
             inpA.setAttribute('id', `expense-amount${id}`);
             inpA.setAttribute('name', `expense-amount${id}`);
     
+            inpF.selectedIndex = 0;
             inpF.setAttribute('id', `expense-frequency${id}`);
             inpF.setAttribute('name', `expense-frequency${id}`);
         }
@@ -110,23 +113,12 @@ function allFilled(rows) {      // checks if all the rows are filled out
 }
 
 
-function objectToFormData(obj) {    // adds all values from hashmap into form data object
-    const formData = new FormData();
-   
-    Object.entries(obj).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-   
-    return formData;
-   }
-
-
 function getData(values) {      // POSTS form data via AJAX call without reloading page
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/handle_form');
-    xhr.onload = function() {
-    };
-    xhr.send(objectToFormData(values));     // POSTS form data 
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/handle_form', true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify(values));     // POSTS form data 
+    console.log(JSON.stringify(values));
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -134,7 +126,7 @@ function getData(values) {      // POSTS form data via AJAX call without reloadi
           // 'this.responseText' contains the response from the server.
           // Insert HTML response into balance sheet page intp the report sheet div like this:
           console.log(this.responseText);
-          document.querySelector("#report").innerHTML = this.responseText; // this.response OR this.responseText
+          document.querySelector("#report").innerHTML = this.response; // this.response OR this.responseText
         }
     }
 }
@@ -144,21 +136,43 @@ function calculate() {      // triggers a calculation when all the rows are fill
     const incomeForm = document.querySelector('#income-form');
     const expenseForm = document.querySelector('#expense-form');
     
+    let rowMap = {};    // added all the values into a hashmap
+
     incomeForm.addEventListener('change', function(event) {
         let incomeFormRows = document.querySelectorAll('#income-form .form-input'); // Checks rows when a change happens in the form
-        event.preventDefault()
+        event.preventDefault();
+        let incomeRowMap = {};  // sub hashmap that contains all the income values
+        let i = 1;
         if (allFilled(incomeFormRows)) {
-            let rowMap = {};    // added all the values into a hashmap
-            let i = 1;
             incomeFormRows.forEach(row => {
-                rowMap[`income-name${i}`] = row.querySelector(`#income-name${i}`).value;
-                rowMap[`income-amount${i}`] = row.querySelector(`#income-amount${i}`).value;
-                rowMap[`income-frequency${i}`] = row.querySelector(`#income-frequency${i}`).value;
+                incomeRowMap[`income-name${i}`] = row.querySelector(`#income-name${i}`).value;
+                incomeRowMap[`income-amount${i}`] = row.querySelector(`#income-amount${i}`).value;
+                incomeRowMap[`income-frequency${i}`] = row.querySelector(`#income-frequency${i}`).value;
                 i++;
             })
-            getData(rowMap);    // receives data collected in hashmap and creates a POST request that updates report div in the balance sheet
-            console.log(rowMap);
-            console.log('Calculation triggered for a filled row:');
+        console.log('Calculation triggered for income form');
+
+        rowMap['Incomes'] = incomeRowMap;
+        getData(rowMap); 
+        }
+    })
+
+    expenseForm.addEventListener('change', function(event) {
+        let expenseFormRows = document.querySelectorAll('#expense-form .form-input'); // Checks rows when a change happens in the form
+        event.preventDefault();
+        let expenseRowMap = {};     // sub hashmap that contains all the expense values
+        let j = 1;
+        if (allFilled(expenseFormRows)) {
+            expenseFormRows.forEach(row => {
+                expenseRowMap[`expense-name${j}`] = row.querySelector(`#expense-name${j}`).value;
+                expenseRowMap[`expense-amount${j}`] = row.querySelector(`#expense-amount${j}`).value;
+                expenseRowMap[`expense-frequency${j}`] = row.querySelector(`#expense-frequency${j}`).value;
+                j++;
+            })
+        console.log('Calculation triggered for expense form');   
+
+        rowMap['Expenses'] = expenseRowMap;
+        getData(rowMap);    // POSTs two dimensional hashmap as a JSON string
         }
     })
 }

@@ -32,7 +32,7 @@ def incomeDF(incFormObj: dict):
     return pd.DataFrame(IncomeValues)
 
 
-def expenseDF(incFormObj: dict):
+def expenseDF(expFormObj: dict):
     '''
     Purpose: 
         Processes the JavaScript object values from form submission and injects into dataframe.
@@ -46,9 +46,9 @@ def expenseDF(incFormObj: dict):
                 Dataframe of values classified by Name, Amount, and Frequency.
                 Each row of the dataframe represents one expense.
     '''
-    names = [entry[1] for entry in incFormObj.items() if 'expense-name' in entry[0]]    # Creates a list of all the income-name values
-    amounts = [float(entry[1]) for entry in incFormObj.items() if 'expense-amount' in entry[0]]      # Creates a list of all the income-amount values
-    frequencies = [entry[1] for entry in incFormObj.items() if 'expense-frequency' in entry[0]]   # Creates a list of all the income-frequency values
+    names = [entry[1] for entry in expFormObj.items() if 'expense-name' in entry[0]]    # Creates a list of all the income-name values
+    amounts = [float(entry[1]) for entry in expFormObj.items() if 'expense-amount' in entry[0]]      # Creates a list of all the income-amount values
+    frequencies = [entry[1] for entry in expFormObj.items() if 'expense-frequency' in entry[0]]   # Creates a list of all the income-frequency values
 
     expenseValues = {}
 
