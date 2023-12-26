@@ -25,19 +25,19 @@
             <div class="forms">
                 <div class="income">
                     <h2 class="form-name">Income</h2>
-                    <form id="income-form">
-                        <div class="form-input">
+                    <form id="income-form" method="post">
+                        <div class="form-input" id="income-form-row1">
                             <div class="form-wrapper">
-                                <input type="text" name="name" placeholder="Name">
-                                <input type="number" name="amount" placeholder="Amount">
-                                <select name="frequency">
+                                <input type="text" class="name" id="income-name1" name="income-name1" placeholder="Name" aria-required>
+                                <input type="number" class="amount" id="income-amount1" name="income-amount1" placeholder="Amount" required>
+                                <select class="frequency" id="income-frequency1" name="income-frequency1" required>
                                     <option value="none" selected disabled hidden>Frequency</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="bi-weekly">Bi-Weekly</option>
                                     <option value="monthly">Monthly</option>
                                 </select>
-                                <button class="delete-button" type="button"><i class="fa-solid fa-x"></i></button>
+                                <button class="delete-button" id="income-row-del-btn1" type="button"><i class="fa-solid fa-x"></i></button>
                             </div>
                         </div>
                         <button class="add-button" type="button"><i class="fa-solid fa-square-plus"></i></button>
@@ -45,28 +45,32 @@
                 </div>
                 <div class="expense">
                     <h2 class="form-name">Expenses</h2>
-                    <form id="expense-form">
-                        <div class="form-input">
+                    <form id="expense-form" method="post">
+                        <div class="form-input" id="expense-form-row1">
                             <div class="form-wrapper">
-                                <input type="text" name="name" placeholder="Name">
-                                <input type="number" name="amount" placeholder="Amount">
-                                <select name="frequency">
+                                <input type="text" class="name" id="expense-name1" name="expense-name1" placeholder="Name">
+                                <input type="number" class="amount" id="expense-amount1" name="expense-amount1" placeholder="Amount">
+                                <select class="frequency" id="expense-frequency1" name="expense-frequency1">
                                     <option value="none" selected disabled hidden>Frequency</option>
                                     <option value="daily">Daily</option>
                                     <option value="weekly">Weekly</option>
                                     <option value="bi-weekly">Bi-Weekly</option>
                                     <option value="monthly">Monthly</option>
                                 </select>
-                                <button class="delete-button" type="button"><i class="fa-solid fa-x"></i></button>
+                                <button class="delete-button" id="expense-row-del-btn1" type="button" id="add-button"><i class="fa-solid fa-x"></i></button>
                             </div>
                         </div>
                         <button class="add-button" type="button"><i class="fa-solid fa-square-plus"></i></button>
                     </form>
-                </div>
+                </div>   
+            </div>
+            <div class="report" id="report">
+                <h1 id="income-sentence">Monthly Income: $0.00</h1>
+                <h1 id="expense-sentence">Monthly Expenses: $0.00</h1>
             </div>
         </div>
     </div>
     <script src="static/bs.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 {% endblock %}

@@ -22,7 +22,8 @@
 }
 
 .forms {
-    height: 100%;
+    /*outline: red dashed 1px;*/
+    height: 50%;
     width: 100%;
     display: flex;
     justify-content: space-evenly;
