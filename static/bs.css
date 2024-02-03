@@ -146,3 +146,12 @@ input[type=number] {
     border: none;
     font-weight: bolder;
 }
+
+#sentences {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#charts {
+    display: flex;
+}

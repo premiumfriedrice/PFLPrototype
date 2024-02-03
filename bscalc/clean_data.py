@@ -52,7 +52,7 @@ def expenseDF(expFormObj: dict):
 
     expenseValues = {}
 
-    expenseValues['Incomes'] = names   # creates a new Key: Value pair in the IncomeValues dict, the value being the list of income-names
+    expenseValues['Expenses'] = names   # creates a new Key: Value pair in the IncomeValues dict, the value being the list of income-names
     expenseValues['Amounts'] = amounts
     expenseValues['Frequencies'] = frequencies
 

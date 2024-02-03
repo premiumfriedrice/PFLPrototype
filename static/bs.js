@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
         nextFormRow.querySelector('.amount').value = '';
         nextFormRow.querySelector('.frequency').selectedIndex = 0;
 
-
         const deleteButton = nextFormRow.querySelector('.delete-button');
         deleteButton.addEventListener('click', function() {     // Deletes the last row
             form.removeChild(nextFormRow);   
@@ -111,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {      // Only executes
         nextFormRow.querySelector('.name').value = '';
         nextFormRow.querySelector('.amount').value = '';
         nextFormRow.querySelector('.frequency').selectedIndex = 0;
-
 
         const deleteButton = nextFormRow.querySelector('.delete-button');
         deleteButton.addEventListener('click', function() {     // Deletes the last row
@@ -189,20 +187,20 @@ function allFilled(rows) {      // checks if all the rows are filled out
 }
 
 
-function getData(values) {      // POSTS form data via AJAX call without reloading page
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/handle_form', true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(values));     // POSTS form data 
+function getMonthlyData(values) {      // POSTS form data via AJAX call without reloading page
+    let xhrPOSTform = new XMLHttpRequest();
+    xhrPOSTform.open('POST', '/handle_form', true);
+    xhrPOSTform.setRequestHeader("Content-Type", "application/json");
+    xhrPOSTform.send(JSON.stringify(values));     // POSTS form data 
     console.log(JSON.stringify(values));
 
-    xhr.onreadystatechange = function() {
+    xhrPOSTform.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           // This is executed when the call to /handle_form was successful.
           // 'this.responseText' contains the response from the server.
           // Insert HTML response into balance sheet page intp the report sheet div like this:
           console.log(this.responseText);
-          document.querySelector("#report").innerHTML = this.response; // this.response OR this.responseText
+          document.querySelector('#report #sentences').innerHTML = this.response; // this.response OR this.responseText
         }
     }
 }
@@ -226,10 +224,19 @@ function calculate() {      // triggers a calculation when all the rows are fill
                 incomeRowMap[`income-frequency${i}`] = row.querySelector(`#income-frequency${i}`).value;
                 i++;
             })
-        console.log('Calculation triggered for income form');
+            console.log('Calculation triggered for income form');
 
-        rowMap['Incomes'] = incomeRowMap;
-        getData(rowMap); 
+            rowMap['Incomes'] = incomeRowMap;
+            getMonthlyData(rowMap); 
+
+            let incomeChartRequest = window.requestIncomeChartData();  // Sets globally accessed chartResponse variable with GET response values from endpoint /chart_data
+            console.log(window.incomeChartResponse);
+            incomeChartRequest.done(function() {
+                console.log(window.incomeChartResponse);
+                let labels = incomeChartResponse.names;   
+                let amounts = incomeChartResponse.amounts;
+                window.updateChart(incomeBreakdownChart, labels, amounts);  // Updates charts with GET response values
+            });
         }
     })
 
@@ -245,13 +252,60 @@ function calculate() {      // triggers a calculation when all the rows are fill
                 expenseRowMap[`expense-frequency${j}`] = row.querySelector(`#expense-frequency${j}`).value;
                 j++;
             })
-        console.log('Calculation triggered for expense form'); 
+            console.log('Calculation triggered for expense form'); 
 
-        rowMap['Expenses'] = expenseRowMap;
-        getData(rowMap);    // POSTs two dimensional hashmap as a JSON string
+            rowMap['Expenses'] = expenseRowMap;
+            getMonthlyData(rowMap);    // POSTs two dimensional hashmap as a JSON string
+
+            let expenseChartRequest = window.requestExpenseChartData();  // Sets globally accessed chartResponse variable with GET response values from endpoint /chart_data
+            console.log(window.expenseChartResponse);
+            expenseChartRequest.done(function() {
+                console.log(window.expenseChartResponse);
+                let labels = expenseChartResponse.names;   
+                let amounts = expenseChartResponse.amounts;
+                window.updateChart(expenseBreakdownChart, labels, amounts);  // Updates charts with GET response values
+            });
         }
     })
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    let incomeChartRequest = window.requestIncomeChartData();
+    let expenseChartRequest = window.requestExpenseChartData();
+    let clearButton = document.querySelector('.clear-button');
+    
+    incomeChartRequest.done(function() {
+        let incomeBreakdown = window.initializeChart(document.querySelector("#incomeBreakdownDonut").getContext("2d"), incomeChartResponse, 'Monthly Income', [
+            'rgb(9, 121, 105)',
+            'rgb(95, 158, 160)',
+            'rgb(0, 255, 127)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+        ]);
+        window.incomeBreakdownChart = incomeBreakdown; 
+    });
+
+    expenseChartRequest.done(function() {
+        let expenseBreakdown = window.initializeChart(document.querySelector("#expenseBreakdownDonut").getContext("2d"), expenseChartResponse, 'Monthly Expense', [
+            'rgb(220, 20, 60)',
+            'rgb(248, 131, 121)',
+            'rgb(227, 11, 92)',
+            'rgb(250, 128, 114)',
+            'rgb(250, 95, 85)'
+        ]);
+        window.expenseBreakdownChart = expenseBreakdown; 
+    });
+
+    clearButton.addEventListener('click', function(){
+       window.clearChart(window.incomeBreakdownChart);
+    });
+
+    
+})
+
+
+
 
 
 document.addEventListener('change', calculate());   // blur or change works 
