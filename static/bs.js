@@ -14,6 +14,19 @@ let deleteButtonPressed = new CustomEvent('deleteButtonPressed', {
 
 let calculateEvent = new Event('change');
 
+const pageAccessedByReload = (
+    (window.performance.navigation && window.performance.navigation.type === 1) ||
+      window.performance
+        .getEntriesByType('navigation')
+        .map((nav) => nav.type)
+        .includes('reload')
+  );
+  
+if (pageAccessedByReload) {
+    window.location.replace("/clear_charts");
+    console.log("charts cleared successfully");
+}
+
 document.addEventListener('DOMContentLoaded', function() {      // Only executes contents of function when all of the DOM is loaded
     const form = document.querySelector('#income-form');
     const addButton = form.querySelector('.add-button');
@@ -199,7 +212,7 @@ function getMonthlyData(values) {      // POSTS form data via AJAX call without 
           // This is executed when the call to /handle_form was successful.
           // 'this.responseText' contains the response from the server.
           // Insert HTML response into balance sheet page intp the report sheet div like this:
-          console.log(this.responseText);
+          // console.log(this.responseText);
           document.querySelector('#report #sentences').innerHTML = this.response; // this.response OR this.responseText
         }
     }

@@ -66,3 +66,18 @@ window.updateChart = function(chart, label, data) {  // Function to update the c
 window.clearChart = function(chart) {
     chart.clear();
 }
+
+window.clearChartData = function() {
+    let clear = $.ajax({
+        type: 'GET',
+        url: '/clear_charts',
+        success: function( response ) { 
+            console.log(response);
+            window.incomeChartResponse = response;    // Response is set to the global variable chartResponse
+        },
+        error: function(xhr, status, error) {
+        console.log(xhr, status, error);
+        }
+        });
+    return clear
+}
